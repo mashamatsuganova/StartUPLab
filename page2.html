@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чек-лист 4P - LabStartUp.bel</title>
+    <style>
+        :root {
+            --primary: #1565C0;
+            --primary-light: #42A5F5;
+            --secondary: #29B6F6;
+            --dark: #0D47A1;
+            --light: #E3F2FD;
+            --accent: #FF9800;
+            --text: #212121;
+            --text-light: #757575;
+            --white: #ffffff;
+            --success: #4CAF50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fbff;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(21, 101, 192, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: #F57C00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.05), rgba(66, 165, 245, 0.05));
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        /* 4P Explanation */
+        .explanation {
+            padding: 3rem 0;
+            background-color: var(--white);
+        }
+        
+        .explanation-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .explanation h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .explanation p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .p-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 2rem;
+        }
+        
+        .p-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .p-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .p-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .p-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Checklist Section */
+        .checklist-section {
+            padding: 3rem 0;
+        }
+        
+        .checklist-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .checklist {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--primary);
+        }
+        
+        .checklist-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .checklist-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .product .checklist-icon {
+            background: linear-gradient(135deg, #42A5F5, #1565C0);
+        }
+        
+        .price .checklist-icon {
+            background: linear-gradient(135deg, #29B6F6, #0288D1);
+        }
+        
+        .place .checklist-icon {
+            background: linear-gradient(135deg, #4FC3F7, #0277BD);
+        }
+        
+        .promotion .checklist-icon {
+            background: linear-gradient(135deg, #81D4FA, #01579B);
+        }
+        
+        .checklist-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .checklist-items {
+            list-style: none;
+        }
+        
+        .checklist-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: background 0.3s;
+        }
+        
+        .checklist-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+        
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+        
+        .checklist-item input[type="checkbox"]:checked + label {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><polygon points="50,0 100,50 50,100 0,50" fill="%23FFFFFF" opacity="0.05"/></svg>');
+            z-index: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-section h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+        
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-light {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-light:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section a {
+            color: #BBDEFB;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #BBDEFB;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .checklist-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🚀</span>
+                    <h1>LabStartUp.bel</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="cards.html">Примеры карточек</a></li>
+                        <li><a href="#checklist">Чек-лист 4P</a></li>
+                        <li><a href="#contacts">Контакты</a></li>
+                    </ul>
+                </nav>
+                <a href="#start" class="btn">Начать игру</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Чек-лист по маркетинговой стратегии 4P</h1>
+            <p>Используйте этот чек-лист для проверки и совершенствования вашего стартап-проекта по четырем ключевым элементам маркетинга</p>
+        </div>
+    </section>
+
+    <!-- 4P Explanation -->
+    <section class="explanation">
+        <div class="container">
+            <div class="explanation-content">
+                <h2>Что такое маркетинг-микс 4P?</h2>
+                <p>Маркетинг-микс 4P — это фундаментальная концепция маркетинга, которая включает четыре ключевых элемента, необходимых для успешного продвижения продукта или услуги на рынке.</p>
+                
+                <div class="p-cards">
+                    <div class="p-card">
+                        <div class="p-card-icon">📦</div>
+                        <h3>Product</h3>
+                        <p>Продукт</p>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-icon">💰</div>
+                        <h3>Price</h3>
+                        <p>Цена</p>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-icon">📍</div>
+                        <h3>Place</h3>
+                        <p>Место</p>
+                    </div>
+                    <div class="p-card">
+                        <div class="p-card-icon">📢</div>
+                        <h3>Promotion</h3>
+                        <p>Продвижение</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checklist Section -->
+    <section class="checklist-section" id="checklist">
+        <div class="container">
+            <div class="checklist-container">
+                <!-- Product Checklist -->
+                <div class="checklist product">
+                    <div class="checklist-header">
+                        <div class="checklist-icon">📦</div>
+                        <h2 class="checklist-title">Product (Продукт)</h2>
+                    </div>
+                    <ul class="checklist-items">
+                        <li class="checklist-item">
+                            <input type="checkbox" id="product1">
+                            <label for="product1">Четко определена основная ценность продукта</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="product2">
+                            <label for="product2">Продукт решает конкретную проблему целевой аудитории</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="product3">
+                            <label for="product3">Определены ключевые функции и характеристики</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="product4">
+                            <label for="product4">Продукт имеет уникальное торговое предложение (УТП)</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="product5">
+                            <label for="product5">Учтены потребности белорусского рынка</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="product6">
+                            <label for="product6">Продумана возможность масштабирования продукта</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="product7">
+                            <label for="product7">Определен жизненный цикл продукта</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="product8">
+                            <label for="product8">Есть план по дальнейшему развитию продукта</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Price Checklist -->
+                <div class="checklist price">
+                    <div class="checklist-header">
+                        <div class="checklist-icon">💰</div>
+                        <h2 class="checklist-title">Price (Цена)</h2>
+                    </div>
+                    <ul class="checklist-items">
+                        <li class="checklist-item">
+                            <input type="checkbox" id="price1">
+                            <label for="price1">Определена стратегия ценообразования</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="price2">
+                            <label for="price2">Учтена себестоимость продукта/услуги</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="price3">
+                            <label for="price3">Проанализированы цены конкурентов</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="price4">
+                            <label for="price4">Цена соответствует воспринимаемой ценности</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="price5">
+                            <label for="price5">Учтена платежеспособность целевой аудитории в Беларуси</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="price6">
+                            <label for="price6">Продуманы возможные скидки и акции</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="price7">
+                            <label for="price7">Определены условия оплаты (единоразово, подписка и т.д.)</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="price8">
+                            <label for="price8">Есть план по изменению цены в будущем</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Place Checklist -->
+                <div class="checklist place">
+                    <div class="checklist-header">
+                        <div class="checklist-icon">📍</div>
+                        <h2 class="checklist-title">Place (Место)</h2>
+                    </div>
+                    <ul class="checklist-items">
+                        <li class="checklist-item">
+                            <input type="checkbox" id="place1">
+                            <label for="place1">Определены каналы распределения продукта</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="place2">
+                            <label for="place2">Выбраны подходящие платформы для размещения</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="place3">
+                            <label for="place3">Учтена специфика белорусского рынка</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="place4">
+                            <label for="place4">Определена географическая зона охвата</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="place5">
+                            <label for="place5">Продумана логистика (если применимо)</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="place6">
+                            <label for="place6">Обеспечена доступность продукта для целевой аудитории</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="place7">
+                            <label for="place7">Определены партнеры по распространению</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="place8">
+                            <label for="place8">Есть план по расширению географии</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Promotion Checklist -->
+                <div class="checklist promotion">
+                    <div class="checklist-header">
+                        <div class="checklist-icon">📢</div>
+                        <h2 class="checklist-title">Promotion (Продвижение)</h2>
+                    </div>
+                    <ul class="checklist-items">
+                        <li class="checklist-item">
+                            <input type="checkbox" id="promotion1">
+                            <label for="promotion1">Разработана стратегия продвижения</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="promotion2">
+                            <label for="promotion2">Определен бюджет на маркетинг</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="promotion3">
+                            <label for="promotion3">Выбраны эффективные каналы продвижения в Беларуси</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="promotion4">
+                            <label for="promotion4">Созданы маркетинговые материалы</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="promotion5">
+                            <label for="promotion5">Продумана работа в социальных сетях</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="promotion6">
+                            <label for="promotion6">Определены ключевые сообщения для аудитории</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="promotion7">
+                            <label for="promotion7">Запланированы мероприятия по PR</label>
+                        </li>
+                        <li class="checklist-item">
+                            <input type="checkbox" id="promotion8">
+                            <label for="promotion8">Есть план по привлечению первых клиентов</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="start">
+        <div class="container cta-content">
+            <h2>Готовы применить чек-лист к своему проекту?</h2>
+            <p>Начните использовать LabStartUp.bel для создания и проверки ваших бизнес-идей с помощью игрового подхода!</p>
+            <a href="#" class="btn btn-light">Начать создавать стартап</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LabStartUp.bel</h3>
+                    <p>Платформа для развития предпринимательского мышления у молодежи Беларуси.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="cards.html">Примеры карточек</a></li>
+                        <li><a href="#checklist">Чек-лист 4P</a></li>
+                        <li><a href="#contacts">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Примеры проектов</a></li>
+                        <li><a href="#">Партнеры</a></li>
+                        <li><a href="#">Поддержка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Email: info@labstartup.bel</li>
+                        <li>Телефон: +375 (XX) XXX-XX-XX</li>
+                        <li>Минск, Беларусь</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 LabStartUp.bel. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Сохранение состояния чек-листа в localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Восстановление состояния чекбоксов
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                const savedState = localStorage.getItem(checkbox.id);
+                if (savedState === 'true') {
+                    checkbox.checked = true;
+                }
+                
+                // Сохранение состояния при изменении
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(checkbox.id, checkbox.checked);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

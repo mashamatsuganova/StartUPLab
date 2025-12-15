@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Примеры карточек - LabStartUp.bel</title>
+    <style>
+        :root {
+            --primary: #1565C0;
+            --primary-light: #42A5F5;
+            --secondary: #29B6F6;
+            --dark: #0D47A1;
+            --light: #E3F2FD;
+            --accent: #FF9800;
+            --text: #212121;
+            --text-light: #757575;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fbff;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(21, 101, 192, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: #F57C00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.05), rgba(66, 165, 245, 0.05));
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        /* Cards Section */
+        .cards-section {
+            padding: 4rem 0;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            border-radius: 12px;
+padding: 2.5rem;
+            color: white;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 0;
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .card-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-features {
+            list-style: none;
+            margin-top: auto;
+        }
+        
+        .card-features li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-features li::before {
+            content: "✓";
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Card Colors */
+        .problem-card {
+            background: linear-gradient(135deg, #42A5F5, #1565C0);
+        }
+        
+        .tech-card {
+            background: linear-gradient(135deg, #29B6F6, #0288D1);
+        }
+        
+        .audience-card {
+            background: linear-gradient(135deg, #4FC3F7, #0277BD);
+        }
+        
+        .condition-card {
+            background: linear-gradient(135deg, #81D4FA, #01579B);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><polygon points="50,0 100,50 50,100 0,50" fill="%23FFFFFF" opacity="0.05"/></svg>');
+            z-index: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-section h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+}
+        
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-light {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-light:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section a {
+            color: #BBDEFB;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #BBDEFB;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🚀</span>
+                    <h1>LabStartUp.bel</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="#cards">Примеры карточек</a></li>
+                        <li><a href="#about">О проекте</a></li>
+                        <li><a href="#contacts">Контакты</a></li>
+                    </ul>
+                </nav>
+                <a href="#start" class="btn">Начать игру</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Примеры карточек</h1>
+            <p>Ознакомьтесь с реальными примерами карточек, которые используются в игре для создания уникальных бизнес-идей для Беларуси</p>
+        </div>
+    </section>
+
+    <!-- Cards Section -->
+    <section class="cards-section" id="cards">
+        <div class="container">
+            <div class="cards-container">
+                <!-- Problem Card -->
+                <div class="card problem-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon">❓</div>
+<h2 class="card-title">Ситуация или проблема</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">В Беларуси многие пожилые люди не умеют пользоваться смартфонами и онлайн-сервисами, что затрудняет доступ к госуслугам, телемедицине и общению с близкими.</p>
+                            <ul class="card-features">
+                                <li>Сложность использования современных технологий</li>
+                                <li>Ограниченный доступ к важным услугам</li>
+                                <li>Социальная изоляция</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Technology Card -->
+                <div class="card tech-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon">🔧</div>
+                            <h2 class="card-title">Технология</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">Мобильное приложение с голосовым управлением и простым интерфейсом.</p>
+                            <ul class="card-features">
+                                <li>Голосовое управление для удобства</li>
+                                <li>Минималистичный и понятный интерфейс</li>
+                                <li>Адаптация под мобильные устройства</li>
+                                <li>Быстрая работа даже на слабых устройствах</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Audience Card -->
+                <div class="card audience-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon">👥</div>
+                            <h2 class="card-title">Целевая аудитория</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">Люди пенсионного возраста (60+) в городах и сельской местности.</p>
+                            <ul class="card-features">
+                                <li>Возрастная категория 60+</li>
+                                <li>Жители как городов, так и сельской местности</li>
+                                <li>Пользователи с ограниченным опытом использования технологий</li>
+                                <li>Люди, нуждающиеся в доступе к госуслугам и телемедицине</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Condition Card -->
+                <div class="card condition-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon">📋</div>
+                            <h2 class="card-title">Дополнительные условия</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">Интерфейс должен быть на русском и белорусском языках, с возможностью офлайн-доступа и поддержки через горячую линию.</p>
+                            <ul class="card-features">
+                                <li>Поддержка русского и белорусского языков</li>
+                                <li>Функция офлайн-доступа к основным возможностям</li>
+                                <li>Круглосуточная горячая линия поддержки</li>
+                                <li>Бесплатное базовое использование</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- CTA Section -->
+    <section class="cta-section" id="start">
+        <div class="container cta-content">
+            <h2>Готов создать свой стартап на основе этих карточек?</h2>
+            <p>Присоединяйтесь к LabStartUp.bel и начните создавать инновационные решения для Беларуси уже сегодня!</p>
+            <a href="#" class="btn btn-light">Начать игру бесплатно</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LabStartUp.bel</h3>
+                    <p>Платформа для развития предпринимательского мышления у молодежи Беларуси.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="#cards">Примеры карточек</a></li>
+                        <li><a href="#about">О проекте</a></li>
+                        <li><a href="#contacts">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Примеры проектов</a></li>
+                        <li><a href="#">Партнеры</a></li>
+                        <li><a href="#">Поддержка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Email: info@labstartup.bel</li>
+                        <li>Телефон: +375 (XX) XXX-XX-XX</li>
+                        <li>Минск, Беларусь</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 LabStartUp.bel. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
